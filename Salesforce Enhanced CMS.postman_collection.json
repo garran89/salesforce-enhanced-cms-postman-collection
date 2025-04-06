@@ -1,0 +1,166 @@
+{
+	"info": {
+		"_postman_id": "310e5a37-48a6-4318-9e2d-bfcac1a18c8f",
+		"name": "Salesforce Enhanced CMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "429378"
+	},
+	"item": [
+		{
+			"name": "Get Authentication Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{sf_user}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{sf_password}}",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "{{sf_client_id}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{sf_client_secret}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{sf_host}}/services/oauth2/token"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Existing Images",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 00DQJ000004WU3t!AQEAQAO2BqcSD6cJegbrf63.zPSIBr9o_jd2bqMcmj47D0aSlMamk5rMjePucQsjY0kwijbY0Hs8tZZZelFiX7EHxGu.9I9n",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"batchRequests\": [\n        {\n            \"method\": \"Post\",\n            \"url\": \"/v61.0/connect/cms/contents/\",\n            \"richInput\": {\n                \"apiName\": \"external_id_1\",\n                \"contentSpaceOrFolderId\": {{contentSpaceOrFolderId}},\n                \"contentBody\": {\n                    \"altText\": \"alt_text\",\n                    \"sfdc_cms:media\": {\n                        \"source\": {\n                            \"mimeType\": null,\n                            \"type\": \"url\",\n                            \"url\": \"https://dummyimage.com/600x400/000/fff&text=dummy+image\"\n                        },\n                        \"url\": \"https://dummyimage.com/600x400/000/fff&text=dummy+image\"\n                    }\n                },\n                \"contentType\": \"sfdc_cms__image\",\n                \"externalId\": \"external_id_1\",\n                \"title\": \"image_title\",\n                \"urlName\": \"image_url_slug\"\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{sf_instance_url}}/services/data/v61.0/query/?q=select+Id,+Name,+(Select+id+from+ManagedContentVariants+)+from+ManagedContent+where+ExternalId+=+'external_id_1'+OR+ExternalId+=+'external_id_2'",
+					"host": [
+						"{{sf_instance_url}}"
+					],
+					"path": [
+						"services",
+						"data",
+						"v61.0",
+						"query",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "select+Id,+Name,+(Select+id+from+ManagedContentVariants+)+from+ManagedContent+where+ExternalId+=+'external_id_1'+OR+ExternalId+=+'external_id_2'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Image Bulk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 00DQJ000004WU3t!AQEAQAO2BqcSD6cJegbrf63.zPSIBr9o_jd2bqMcmj47D0aSlMamk5rMjePucQsjY0kwijbY0Hs8tZZZelFiX7EHxGu.9I9n",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"batchRequests\": [\n        {\n            \"method\": \"Post\",\n            \"url\": \"/v61.0/connect/cms/contents/\",\n            \"richInput\": {\n                \"apiName\": \"external_id_1\",\n                \"contentSpaceOrFolderId\": \"{{contentSpaceOrFolderId}}\",\n                \"contentBody\": {\n                    \"altText\": \"alt_text\",\n                    \"sfdc_cms:media\": {\n                        \"source\": {\n                            \"mimeType\": null,\n                            \"type\": \"url\",\n                            \"url\": \"https://dummyimage.com/600x400/000/fff&text=dummy+image\"\n                        },\n                        \"url\": \"https://dummyimage.com/600x400/000/fff&text=dummy+image\"\n                    }\n                },\n                \"contentType\": \"sfdc_cms__image\",\n                \"externalId\": \"external_id_1\",\n                \"title\": \"image_title\",\n                \"urlName\": \"image-url-slug\"\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{sf_instance_url}}/services/data/v61.0/connect/batch"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Image Bulk",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 00DQJ000004WU3t!AQEAQAO2BqcSD6cJegbrf63.zPSIBr9o_jd2bqMcmj47D0aSlMamk5rMjePucQsjY0kwijbY0Hs8tZZZelFiX7EHxGu.9I9n",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"batchRequests\": [\n        {\n            \"method\": \"Put\",\n            \"url\": \"/v61.0/connect/cms/contents/variants/9PsQJ000000KIwr0AG\",\n            \"richInput\": {\n                \"contentBody\": {\n                    \"altText\": \"alt_text_updated\",\n                    \"sfdc_cms:media\": {\n                        \"source\": {\n                            \"mimeType\": null,\n                            \"type\": \"url\",\n                            \"url\": \"https://dummyimage.com/600x400/000/fff&text=dummy+image+updated\"\n                        },\n                        \"url\": \"https://dummyimage.com/600x400/000/fff&text=dummy+image+updated\"\n                    }\n                },\n                \"title\": \"image_title_updated\",\n                \"urlName\": \"image-url-slug\"\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{sf_instance_url}}/services/data/v61.0/connect/batch"
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Image",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer 00DQJ000004WU3t!AQEAQAO2BqcSD6cJegbrf63.zPSIBr9o_jd2bqMcmj47D0aSlMamk5rMjePucQsjY0kwijbY0Hs8tZZZelFiX7EHxGu.9I9n",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"Test Description\",\n    \"contentIds\": [\n        \"20YQJ000003ck6X2AQ\"\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{sf_instance_url}}/services/data/v61.0/connect/cms/contents/publish"
+			},
+			"response": []
+		}
+	]
+}
